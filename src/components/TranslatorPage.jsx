@@ -16,7 +16,7 @@ const TranslatorPage = () => {
     e.preventDefault();
     setError(null);  // Reset any previous error messages
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/translate`, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/translate`, {
         text,
         target_language: language,
       });
