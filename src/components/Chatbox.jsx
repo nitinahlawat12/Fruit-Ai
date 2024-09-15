@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import '../styles/Chatbox.css'; // Updated import path
+import '../styles/chatbox.css'; // Updated import path
 
 const Chatbox = () => {
     const [messages, setMessages] = useState([]);
