@@ -6,6 +6,7 @@ const TranslatorPage = () => {
   const [text, setText] = useState('');
   const [translatedText, setTranslatedText] = useState('');
   const [language, setLanguage] = useState('es'); // Default to Spanish
+  const [error, setError] = useState(null);
 
   const handleTextChange = (e) => setText(e.target.value);
 
@@ -13,15 +14,17 @@ const TranslatorPage = () => {
 
   const handleTranslate = async (e) => {
     e.preventDefault();
+    setError(null);  // Reset any previous error messages
     try {
-      const response = await axios.post('http://localhost:5000/translate', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/translate`, {
         text,
         target_language: language,
       });
       setTranslatedText(response.data.translated_text);
     } catch (error) {
       console.error('Error translating text:', error);
-      setTranslatedText('Translation failed.');
+      setError('Translation failed. Please try again.');
+      setTranslatedText('');
     }
   };
 
@@ -50,7 +53,7 @@ const TranslatorPage = () => {
         <button type="submit" className="translator-button">Translate</button>
       </form>
       <div className="translator-response">
-        <p>{translatedText}</p>
+        {error ? <p className="error">{error}</p> : <p>{translatedText}</p>}
       </div>
     </div>
   );
